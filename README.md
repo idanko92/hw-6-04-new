@@ -264,7 +264,7 @@ admin_password = netology
 
 <ol start="1">
 <li>Метрика добавлена и настроена в Grafana</li>
-<li>docker-compose.yml в коде ниже</li> 
+<li>docker-compose.yml в коде ниже, также все файлы загружены в папку <a href="https://github.com/idanko92/hw-6-04-new/tree/main/hw-compose">hw-compose</a></li> 
 <li>Скриншот команды docker ps после запуске docker-compose.yml и скриншот графика, постоенного на основе метрики ниже</li>
 </ol>
 
