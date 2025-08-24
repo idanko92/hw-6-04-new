@@ -1,0 +1,75 @@
+version: "3.9"
+
+services:
+  prometheus:
+    image: prom/prometheus:v2.36.2
+    container_name: "klyucherevdo-netology-prometheus"
+    restart: always
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/:/etc/prometheus/
+      - prometheus_data:/prometheus
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+    depends_on:
+      - cadvisor
+      - pushgateway
+    networks:
+      - klyucherevdo-netology-hw
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.47.2
+    restart: always
+    ports:
+      - "8081:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    networks:
+      - klyucherevdo-netology-hw
+
+  pushgateway:
+    image: prom/pushgateway:v1.6.2
+    container_name: "klyucherevdo-netology-pushgateway"
+    restart: always
+    ports:
+      - "9091:9091"
+    networks:
+      - klyucherevdo-netology-hw
+
+  grafana:
+    image: grafana/grafana:10.4.3
+    container_name: "klyucherevdo-netology-grafana"
+    user: "472"
+    restart: always
+    depends_on:
+      - prometheus
+    ports:
+      - "80:3000"
+    environment:
+      GF_PATHS_CONFIG: /etc/grafana/custom/custom.ini
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning/:/etc/grafana/provisioning/
+      - ./grafana/custom:/etc/grafana/custom
+    networks:
+      - klyucherevdo-netology-hw
+
+volumes:
+  prometheus_data:
+  grafana_data:
+  grafana_config:
+
+networks:
+  klyucherevdo-netology-hw:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.5.0.0/16
+          ip_range: 10.5.0.0/24
+          gateway: 10.5.0.1
