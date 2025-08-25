@@ -38,6 +38,7 @@
 <ol start="1">
 <li>Созданы 3 YML файла с запуском на другой виртуальной машине находящейся в файле inventory.ini в группе ubuntu</li>
 <li>Команда для запуска - ansible-playbook playbook(1-3).yml -i inventory.ini -K</li>
+<li>Файлы с заданием в папке <a href="https://github.com/idanko92/net-hw-klycherev/tree/hw-7-01/Ex%201-2">Ex 1-2</a></li>
 </ol>
 
 ```
@@ -152,6 +153,7 @@ playbook3.yml
 <ol start="1">
 <li>Внесены изменения в playbook3.yml файл</li>
 <li>Команда для запуска - ansible-playbook playbook3new.yml -i inventory.ini -K</li>
+<li>Файлы с заданием в папке <a href="https://github.com/idanko92/net-hw-klycherev/tree/hw-7-01/Ex%201-2">Ex 1-2</a></li>
 </ol>
 
 
@@ -216,7 +218,8 @@ playbook3new.yml
 <ol start="1">
 <li>Создаем все требуемые папки в рабочем каталоге командой ansible-galaxy init roles/apacheinfo</li>
 <li>Добавляем следующие файлы конфигурации site.yml, roles/apacheinfo/tasks/main.yml, roles/apache_info/handlers/main.yml, roles/apache_info/templates/index.html.j2</li>
-<li>Запускаем выполнение - ansible-playbook -i inventory.ini site.yml -K</li> 
+<li>Запускаем выполнение - ansible-playbook -i inventory.ini site.yml -K</li>
+<li>Файлы с заданием в папке <a href="https://github.com/idanko92/net-hw-klycherev/tree/hw-7-01/apacheinfo">apacheinfo</a></li>
 </ol>
 
 ```
