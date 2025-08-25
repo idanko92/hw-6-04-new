@@ -36,12 +36,12 @@
 
 
 <ol start="1">
-<li>Внесены изменения в docker-compose.yml файл</li>
-<li>Добавлен файл ./prometheus/prometheus.yml взятый из репозитория в задании</li>
-<li>Проверен доступ к поднятому Prometheus с машины windows на которой создана VM</li> 
+<li>Созданы 3 YML файла с запуском на другой виртуальной машине находящейся в файле inventory.ini в группе ubuntu</li>
+<li>Команда для запуска - ansible-playbook playbook(1-3).yml -i inventory.ini -K</li>
 </ol>
 
 ```
+---
 playbook1.yml
 ---
 - name: Dl and extract Apache Kafka
@@ -74,7 +74,72 @@ playbook1.yml
         dest: "{{ extract_dir }}"
         remote_src: yes
 
+
+playbook2.yml
+
+- name: Install and launch tuned
+  hosts: ubuntu
+  become: yes
+
+  tasks:
+    - name: Install tuned
+      apt:
+        name: tuned
+        state: present
+        update_cache: yes
+
+    - name: Add tuned to autostart and start
+      systemd:
+        name: tuned
+        enabled: yes
+        state: started
+
+    - name: Gather service facts
+      ansible.builtin.service_facts:
+
+    - name: Check that tuned is running
+      ansible.builtin.assert:
+        that:
+          - ansible_facts.services['tuned.service'].state == 'running'
+          - ansible_facts.services['tuned.service'].status == 'enabled' or
+            ansible_facts.services['tuned.service'].enabled | default(false)
+        fail_msg: "tuned is not running and does not"
+        success_msg: "tuned is running and autostarts"
+
+    - name: Show active tuned profile
+      command: tuned-adm active
+      register: tuned_profile
+      changed_when: false
+
+    - name: Show profile
+      debug:
+         var: tuned_profile.stdout
+         
+         
+playbook3.yml
+
+---
+- name: Change motd
+  hosts: ubuntu
+  become: yes
+
+  vars:
+    custom_motd: "This is a custom motd"
+
+  tasks:
+    - name: Set new motd
+      copy:
+        dest: /etc/motd
+        content: "{{ custom_motd }}\n"
+        owner: root
+        group: root
+        mode: '0644'
+
 ```
+
+![Установка playbook1](https://github.com/idanko92/net-hw-klycherev/blob/hw-7-01/img/playbook1.jpg) 
+![Установка playbook2](https://github.com/idanko92/net-hw-klycherev/blob/hw-7-01/img/playbook2.jpg) 
+![Установка playbook3](https://github.com/idanko92/net-hw-klycherev/blob/hw-7-01/img/playbook3.jpg) 
 
 ---
 
