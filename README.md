@@ -150,41 +150,46 @@ playbook3.yml
 Модифицируйте плейбук из пункта 3, задания 1. В качестве приветствия он должен установить IP-адрес и hostname управляемого хоста, пожелание хорошего дня системному администратору. 
 
 <ol start="1">
-<li>Внесены изменения в docker-compose.yml файл</li>
-<li>Добавлен файл ./prometheus/prometheus.yml взятый из репозитория в задании</li>
-<li>Проверен доступ к поднятому Prometheus с машины windows на которой создана VM</li> 
+<li>Внесены изменения в playbook3.yml файл</li>
+<li>Команда для запуска - ansible-playbook playbook3new.yml -i inventory.ini -K</li>
 </ol>
 
 
 ```
-version: "3.9"
+playbook3new.yml
+---
+- name: Update MOTD with host IP and hostname
+  hosts: all
+  become: yes
+  gather_facts: true
 
-services:
-  app:
-    image: nginx:stable
-    container_name: app-nginx
-    restart: unless-stopped
-    ports:
-      - "8080:80"
-    volumes:
-      - app_data:/usr/share/nginx/html:ro
-    networks:
-      - klyucherevdo-netology-hw
+  vars:
+    motd_template: |
+      Host: {{ ansible_facts['hostname'] }}
+      IP: {{ ansible_facts.get('default_ipv4', {}).get('address', 'N/A') }}
+      Have a great day, sysadmin!
 
-volumes:
-  app_data:
+  tasks:
+    - name: Set MOTD
+      ansible.builtin.copy:
+        dest: /etc/motd
+        content: "{{ motd_template }}\n"
+        owner: root
+        group: root
+        mode: '0644'
 
-networks:
-  klyucherevdo-netology-hw:
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: 10.5.0.0/16
-          ip_range: 10.5.0.0/24
-          gateway: 10.5.0.1
+    - name: Show current MOTD
+      ansible.builtin.command:
+        cmd: cat /etc/motd
+      register: motd_out
+      changed_when: false
+
+    - name: Print MOTD for verification
+      ansible.builtin.debug:
+        var: motd_out.stdout
 
 ```
+![Установка playbook3](https://github.com/idanko92/net-hw-klycherev/blob/hw-7-01/img/playbook3new.jpg) 
 
 ---
 
