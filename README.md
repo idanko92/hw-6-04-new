@@ -214,58 +214,102 @@ playbook3new.yml
 - предоставьте скриншот браузера, отображающего сконфигурированный index.html в качестве сайта.
 
 <ol start="1">
-<li>Внесены изменения в docker-compose.yml файл</li>
-<li>Добавлен файл ./prometheus/prometheus.yml взятый из репозитория в задании</li>
-<li>Проверен доступ к поднятому Prometheus с машины windows на которой создана VM</li> 
+<li>Создаем все требуемые папки в рабочем каталоге командой ansible-galaxy init roles/apacheinfo</li>
+<li>Добавляем следующие файлы конфигурации site.yml, roles/apacheinfo/tasks/main.yml, roles/apache_info/handlers/main.yml, roles/apache_info/templates/index.html.j2</li>
+<li>Запускаем выполнение - ansible-playbook -i inventory.ini site.yml -K</li> 
 </ol>
 
 ```
-version: "3.9"
+site.yml
+---
+- name: Setting up Apache to show host systeminfo
+  hosts: ubuntu
+  become: yes
+  roles:
+    - apacheinfo
 
-services:
-  prometheus:
-    image: prom/prometheus:v2.36.2
-    container_name: "klyucherevdo-netology-prometheus"
-    restart: always
-    ports:
-      - "9090:9090"
-    volumes:
-      - ./prometheus/:/etc/prometheus/
-      - prometheus_data:/prometheus
-    command:
-      - --config.file=/etc/prometheus/prometheus.yml
-      - --storage.tsdb.path=/prometheus
-      - --web.console.libraries=/usr/share/prometheus/console_libraries
-      - --web.console.templates=/usr/share/prometheus/consoles
-    networks:
-      - klyucherevdo-netology-hw
+- name: Cheking site avalibility
+  hosts: localhost
+  tasks:
+    - name: Cheking site avalibility
+      uri:
+        url: "http://{{ hostvars[item]['ansible_default_ipv4']['address'] }}"
+        return_content: yes
+      loop: "{{ groups['all'] }}"
+      register: site_check
 
-  cadvisor:
-    image: gcr.io/cadvisor/cadvisor:v0.47.2
-    restart: always
-    ports:
-      - "8081:8080"
-    volumes:
-      - /:/rootfs:ro
-      - /var/run:/var/run:rw
-      - /sys:/sys:ro
-      - /var/lib/docker/:/var/lib/docker:ro
-    networks:
-      - klyucherevdo-netology-hw
+    - name: Show check status
+      debug:
+        var: site_check
+		
+roles/apache_info/tasks/main.yml
+---
+- name: install Apache
+  apt:
+    name: apache2
+    state: present
+    update_cache: yes
 
-volumes:
-  prometheus_data:
+- name: Start apache2
+  service:
+    name: apache2
+    state: started
+    enabled: yes
 
-networks:
-  klyucherevdo-netology-hw:
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: 10.5.0.0/16
-          ip_range: 10.5.0.0/24
-          gateway: 10.5.0.1
+- name: Install ufw
+  apt:
+    name: ufw
+    state: present
+    update_cache: yes
+
+- name: Open port 80 in ufw
+  ufw:
+    rule: allow
+    port: '80'
+    proto: tcp
+
+- name: Copy index.html from template
+  template:
+    src: index.html.j2
+    dest: /var/www/html/index.html
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart Apache
+
+roles/apache_info/handlers/main.yml
+---
+- name: Restart Apache
+  service:
+    name: apache2
+    state: restarted
+
+roles/apache_info/templates/index.html.j2
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>System info {{ ansible_hostname }}</title>
+    <meta charset="utf-8">
+</head>
+<body>
+    <h1>Server: {{ ansible_hostname }}</h1>
+    <ul>
+        <li><b>CPU:</b> {{ ansible_processor[1] }} ({{ ansible_processor_cores }} cores)</li>
+        <li><b>RAM:</b> {{ (ansible_memtotal_mb / 1024) | round(1) }} GB</li>
+        <li><b>HDD:</b> {{ ansible_devices.sda.size }}</li>
+        <li><b>IP-adress:</b> {{ ansible_default_ipv4.address }}</li>
+        <li><b>OS:</b> {{ ansible_distribution }} {{ ansible_distribution_version }}</li>
+    </ul>
+</body>
+</html>
+
 ```
 
-![Доступность с внешнего ip](https://github.com/idanko92/hw-6-04-new/blob/main/img/Screenshot_1.jpg) 
+![Доступность с внешнего ip](https://github.com/idanko92/net-hw-klycherev/blob/hw-7-01/img/site1.yml.jpg) 
 
+![Доступность с внешнего ip](https://github.com/idanko92/net-hw-klycherev/blob/hw-7-01/img/site2.yml.jpg) 
+
+![Доступность с внешнего ip](https://github.com/idanko92/net-hw-klycherev/blob/hw-7-01/img/index.html.jpg) 
+
+---
