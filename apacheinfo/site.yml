@@ -1,0 +1,20 @@
+---
+- name: Setting up Apache to show host systeminfo
+  hosts: ubuntu
+  become: yes
+  roles:
+    - apacheinfo
+
+- name: Cheking site avalibility
+  hosts: localhost
+  tasks:
+    - name: Cheking site avalibility
+      uri:
+        url: "http://{{ hostvars[item]['ansible_default_ipv4']['address'] }}"
+        return_content: yes
+      loop: "{{ groups['all'] }}"
+      register: site_check
+
+    - name: Show check status
+      debug:
+        var: site_check
