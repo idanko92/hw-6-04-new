@@ -147,7 +147,7 @@ networks:
           gateway: 10.5.0.1
 ```
 
-![Доступность с внешнего ip](https://github.com/idanko92/hw-6-04-new/blob/main/img/Screenshot_1.jpg) 
+![Доступность с внешнего ip](https://github.com/idanko92/net-hw-klycherev/blob/hw-6-04-new/img/Screenshot_1.jpg) 
 
 ---
 
@@ -172,7 +172,7 @@ networks:
       - klyucherevdo-netology-hw
 ```
 
-![Доступность с внешнего ip](https://github.com/idanko92/hw-6-04-new/blob/main/img/Screenshot_2.jpg) 
+![Доступность с внешнего ip](https://github.com/idanko92/net-hw-klycherev/blob/hw-6-04-new/img/Screenshot_2.jpg) 
 
 ---
 
@@ -218,7 +218,7 @@ admin_user = klyucherevdo
 admin_password = netology
 ```
 
-![Доступность с внешнего ip](https://github.com/idanko92/hw-6-04-new/blob/main/img/Screenshot_3.jpg) 
+![Доступность с внешнего ip](https://github.com/idanko92/net-hw-klycherev/blob/hw-6-04-new/img/Screenshot_3.jpg) 
 
 ---
 
@@ -345,9 +345,9 @@ networks:
           ip_range: 10.5.0.0/24
           gateway: 10.5.0.1
 ```
-![docker ps](https://github.com/idanko92/hw-6-04-new/blob/main/img/Screenshot_5.jpg)   
+![docker ps](https://github.com/idanko92/net-hw-klycherev/blob/hw-6-04-new/img/Screenshot_5.jpg)   
 
-![Метрика в Grafana](https://github.com/idanko92/hw-6-04-new/blob/main/img/Screenshot_4.jpg) 
+![Метрика в Grafana](https://github.com/idanko92/net-hw-klycherev/blob/hw-6-04-new/img/Screenshot_4.jpg) 
 
 ---
 
@@ -362,4 +362,4 @@ networks:
 <li>Выполнил команду docker compose down</li>
 </ol>
 
-![docker compose down](https://github.com/idanko92/hw-6-04-new/blob/main/img/Screenshot_5.jpg)   
+![docker compose down](https://github.com/idanko92/net-hw-klycherev/blob/hw-6-04-new/img/Screenshot_5.jpg)   
