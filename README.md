@@ -137,10 +137,18 @@ playbook3.yml
         mode: '0644'
 
 ```
-
-![Установка playbook1](https://github.com/idanko92/net-hw-klycherev/blob/hw-7-01/img/playbook1.jpg) 
-![Установка playbook2](https://github.com/idanko92/net-hw-klycherev/blob/hw-7-01/img/playbook2.jpg) 
-![Установка playbook3](https://github.com/idanko92/net-hw-klycherev/blob/hw-7-01/img/playbook3.jpg) 
+Процесс установки playbook1.yml  
+![Установка playbook1](https://github.com/idanko92/net-hw-klycherev/blob/hw-7-01/img/playbook1.jpg)  
+Результат playbook1.yml  
+![Установка playbook1](https://github.com/idanko92/net-hw-klycherev/blob/hw-7-01/img/playbook1result.jpg)  
+Процесс установки playbook2.yml  
+![Установка playbook2](https://github.com/idanko92/net-hw-klycherev/blob/hw-7-01/img/playbook2.jpg)  
+Результат playbook2.yml  
+![Установка playbook2](https://github.com/idanko92/net-hw-klycherev/blob/hw-7-01/img/playbook2result.jpg)  
+Процесс установки playbook3.yml  
+![Установка playbook3](https://github.com/idanko92/net-hw-klycherev/blob/hw-7-01/img/playbook3.jpg)  
+Результат playbook3.yml  
+![Установка playbook3](https://github.com/idanko92/net-hw-klycherev/blob/hw-7-01/img/playbook3result.jpg)  
 
 ---
 
@@ -191,7 +199,10 @@ playbook3new.yml
         var: motd_out.stdout
 
 ```
+Процесс установки playbook3new.yml  
 ![Установка playbook3](https://github.com/idanko92/net-hw-klycherev/blob/hw-7-01/img/playbook3new.jpg) 
+Результат playbook3new.yml  
+![Установка playbook3](https://github.com/idanko92/net-hw-klycherev/blob/hw-7-01/img/playbook3newresult.jpg) 
 
 ---
 
