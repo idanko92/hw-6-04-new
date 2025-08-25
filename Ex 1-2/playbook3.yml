@@ -1,0 +1,16 @@
+---
+- name: Change motd
+  hosts: ubuntu
+  become: yes
+
+  vars:
+    custom_motd: "This is a custom motd"
+
+  tasks:
+    - name: Set new motd
+      copy:
+        dest: /etc/motd
+        content: "{{ custom_motd }}\n"
+        owner: root
+        group: root
+        mode: '0644'

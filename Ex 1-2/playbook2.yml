@@ -1,0 +1,38 @@
+---
+- name: Install and launch tuned
+  hosts: ubuntu
+  become: yes
+
+  tasks:
+    - name: Install tuned
+      apt:
+        name: tuned
+        state: present
+        update_cache: yes
+
+    - name: Add tuned to autostart and start
+      systemd:
+        name: tuned
+        enabled: yes
+        state: started
+
+    - name: Gather service facts
+      ansible.builtin.service_facts:
+
+    - name: Check that tuned is running
+      ansible.builtin.assert:
+        that:
+          - ansible_facts.services['tuned.service'].state == 'running'
+          - ansible_facts.services['tuned.service'].status == 'enabled' or
+            ansible_facts.services['tuned.service'].enabled | default(false)
+        fail_msg: "tuned is not running and does not"
+        success_msg: "tuned is running and autostarts"
+
+    - name: Show active tuned profile
+      command: tuned-adm active
+      register: tuned_profile
+      changed_when: false
+
+    - name: Show profile
+      debug:
+         var: tuned_profile.stdout

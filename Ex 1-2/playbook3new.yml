@@ -1,0 +1,30 @@
+---
+- name: Update MOTD with host IP and hostname
+  hosts: all
+  become: yes
+  gather_facts: true
+
+  vars:
+    motd_template: |
+      Host: {{ ansible_facts['hostname'] }}
+      IP: {{ ansible_facts.get('default_ipv4', {}).get('address', 'N/A') }}
+      Have a great day, admin!
+
+  tasks:
+    - name: Set MOTD using Jinja2 template string
+      ansible.builtin.copy:
+        dest: /etc/motd
+        content: "{{ motd_template }}\n"
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Show current MOTD
+      ansible.builtin.command:
+        cmd: cat /etc/motd
+      register: motd_out
+      changed_when: false
+
+    - name: Print MOTD for verification
+      ansible.builtin.debug:
+        var: motd_out.stdout
