@@ -1,0 +1,57 @@
+---
+- name: nginx
+  gather_facts: yes
+  hosts: webservers
+  vars:
+    ansible_ssh_user: user
+  become: yes
+
+  pre_tasks:
+    - name: Validating the ssh port is open and
+      wait_for:
+        host: "{{ (ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}"
+        port: 22
+        delay: 5
+        timeout: 300
+        state: started
+        search_regex: OpenSSH
+
+  tasks:
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: yes
+      changed_when: false
+
+    - name: Install nginx
+      ansible.builtin.apt:
+        name: nginx
+        state: present
+
+    - name: Ensure nginx is enabled and running
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: yes
+
+    - name: Create default index page
+      ansible.builtin.copy:
+        dest: /var/www/html/index.html
+        content: |
+          <!doctype html>
+          <html>
+          <head><meta charset="utf-8"><title>Nginx deployed by Ansible</title></head>
+          <body>
+            <h1>It works!</h1>
+            <p>Host: {{ inventory_hostname }}</p>
+          </body>
+          </html>
+        owner: root
+        group: root
+        mode: '0644'
+      notify: Reload nginx
+
+  handlers:
+    - name: Reload nginx
+      ansible.builtin.service:
+        name: nginx
+        state: reloaded
