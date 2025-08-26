@@ -24,9 +24,9 @@
 
 Провести тестирование и приложить скриншоты развернутых в облаке ВМ, успешно отработавшего ansible playbook. 
 
-1. `Заполните здесь этапы выполнения, если требуется ....`
-2. `Заполните здесь этапы выполнения, если требуется ....`
-3. `Заполните здесь этапы выполнения, если требуется ....`
+1. На VM развернутых в прошлом задании выполним код nginx.yml файл находится в папке [7-03](https://github.com/idanko92/net-hw-klycherev/tree/hw-7-03/7-03)
+2. Проверки запущеного nginx проведем с VM bastion через curl
+3. Удалим все машины после выполнения задания
 4. `Заполните здесь этапы выполнения, если требуется ....`
 5. `Заполните здесь этапы выполнения, если требуется ....`
 6. 
@@ -39,8 +39,7 @@
 ....
 ```
 
-`При необходимости прикрепитe сюда скриншоты
-![Название скриншота 2](ссылка на скриншот 2)`
-
-
-
+![yandexcloud](https://github.com/idanko92/net-hw-klycherev/blob/hw-7-03/img/yandexcloud.jpg)  
+![nginx.yml](https://github.com/idanko92/net-hw-klycherev/blob/hw-7-03/img/nginx.yml.jpg)  
+![curlwebab](https://github.com/idanko92/net-hw-klycherev/blob/hw-7-03/img/curlwebab.jpg)  
+![terraformdestroy](https://github.com/idanko92/net-hw-klycherev/blob/hw-7-03/img/terraformdestroy.jpg)  
