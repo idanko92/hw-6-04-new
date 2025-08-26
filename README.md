@@ -10,9 +10,11 @@
 3. Файл terraformapply.log c ходом установке добавлем в папку [7-03](https://github.com/idanko92/net-hw-klycherev/tree/hw-7-03/7-03).
 4. Скриншоты с результатами ниже.
 
-`При необходимости прикрепитe сюда скриншоты
-![Название скриншота 1](ссылка на скриншот 1)`
-
+![yandexcloud](https://github.com/idanko92/net-hw-klycherev/blob/hw-7-03/img/yandexcloud.jpg)  
+![test.yml](https://github.com/idanko92/net-hw-klycherev/blob/hw-7-03/img/test.yml.jpg)  
+![webaa1](https://github.com/idanko92/net-hw-klycherev/blob/hw-7-03/img/weba1.jpg)  
+![webaa2](https://github.com/idanko92/net-hw-klycherev/blob/hw-7-03/img/weba2.jpg)  
+![webb](https://github.com/idanko92/net-hw-klycherev/blob/hw-7-03/img/webb.jpg)  
 
 ---
 
