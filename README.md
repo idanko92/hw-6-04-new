@@ -55,7 +55,7 @@
 
  <ol start="1">
 <li>Склонирован и запушен репозиторий из задания</li>
-<li>Создан и запушен файл .gitlab-ci.yml с тегами чтобы раннер отработал код файла ниже и сам файл в [директории](https://github.com/idanko92/net-hw-klycherev/tree/hw-8-03)</li>
+<li>Создан и запушен файл .gitlab-ci.yml с тегами чтобы раннер отработал код файла ниже и сам файл в <a href="https://github.com/idanko92/net-hw-klycherev/tree/hw-8-03">директории</a></li>
 </ol>
 
 ![runner](https://github.com/idanko92/net-hw-klycherev/blob/hw-8-03/img/gitjobresult.jpg)  
