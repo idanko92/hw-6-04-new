@@ -27,7 +27,15 @@
 
 В качестве ответа в репозиторий шаблона с решением добавьте скриншоты с настройками раннера в проекте.
 
-![runner](https://github.com/idanko92/net-hw-klycherev/blob/hw-8-03/img/runner.jpg)
+<ol start="1">
+<li>Созданы виртуальная машина с помощью Vagantfile, с изменением версии Ubuntu и образа gitlab т.к. оригинальные на работали</li>
+<li>Создан новый проект и репозиторий в GitLab</li>
+<li>Создан раннер </li>
+</ol>
+
+![runner](https://github.com/idanko92/net-hw-klycherev/blob/hw-8-03/img/runner.jpg)  
+
+![runner](https://github.com/idanko92/net-hw-klycherev/blob/hw-8-03/img/runnergitlab.jpg)  
 
 ---
 
@@ -42,5 +50,33 @@
    
  * файл gitlab-ci.yml для своего проекта или вставьте код в соответствующее поле в шаблоне; 
  * скриншоты с успешно собранными сборками.
- 
- 
+
+
+
+ <ol start="1">
+<li>Склонирован и запушен репозиторий из задания</li>
+<li>Создан и запушен файл .gitlab-ci.yml с тегами чтобы раннер отработал код файла ниже и сам файл в [директории](https://github.com/idanko92/net-hw-klycherev/tree/hw-8-03)</li>
+</ol>
+
+![runner](https://github.com/idanko92/net-hw-klycherev/blob/hw-8-03/img/gitjobresult.jpg)  
+
+```
+
+stages:
+  - test
+  - build
+test:
+  stage: test
+  image: golang:1.17
+  script: 
+   - go test .
+  tags:
+   - hw
+build:
+  stage: build
+  image: docker:latest
+  script:
+   - docker build .
+  tags:
+   - hw
+```
