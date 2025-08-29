@@ -73,5 +73,5 @@
 2. В файл конфигурации haproxy.conf внесены изменения соответственно заданию
 3. Скриншоты с результатами прикреплены ниже, файлы находятся в папке [files](/files)
 
-[HAProxy](/img/haproxy2.jpg)
-[HAProxystats](/img/haproxy2stats.jpg)
+![HAProxy](/img/haproxy2.jpg)
+![HAProxystats](/img/haproxy2stats.jpg)
